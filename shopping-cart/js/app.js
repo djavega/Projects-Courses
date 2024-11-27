@@ -4,7 +4,10 @@ let articles = []
 
 loadEventListeners()
 function loadEventListeners() {
-
+    document.addEventListener('DOMContentLoaded', () => {
+        articles = JSON.parse(localStorage.getItem('carrito')) || []
+        createShoppingCartHTML()
+    })
     //Add to shopping cart
     document.querySelectorAll('.agregar-carrito').forEach((btn, _) => {
         btn.addEventListener('click', (event) => addToCart(event, btn));
@@ -70,7 +73,12 @@ function cleanShoppingCart() {
     }
 }
 
+function sincronizeLocalStorage (articles) {
+    localStorage.setItem('carrito', JSON.stringify(articles))
+}
+
 function createShoppingCartHTML() {
+    sincronizeLocalStorage(articles)
     //Clean the previous articles
     cleanShoppingCart()
 
